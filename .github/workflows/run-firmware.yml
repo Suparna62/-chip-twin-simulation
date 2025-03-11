@@ -1,0 +1,14 @@
+name: Run Firmware in QEMU
+on: push
+jobs:
+  build-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Install QEMU
+        run: sudo apt update && sudo apt install -y qemu-system-arm
+      - name: Run Firmware
+        run: qemu-system-arm -M stm32-p103 -kernel firmware/firmware.elf -serial stdio
+
+
