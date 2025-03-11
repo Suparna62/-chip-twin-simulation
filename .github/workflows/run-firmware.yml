@@ -6,13 +6,22 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Install QEMU
-        run: sudo apt update && sudo apt install -y qemu-system-arm
+
+      - name: Install QEMU and ARM GCC Toolchain
+        run: sudo apt update && sudo apt install -y qemu-system-arm gcc-arm-none-eabi make
+
+      - name: Verify Repository Structure
+        run: |
+          echo "Checking repository structure..."
+          ls -la
+          if [ ! -d "firmware" ]; then 
+            echo "❌ ERROR: 'firmware/' directory is missing!"; 
+            exit 1; 
+          fi
+
       - name: Build Firmware
         run: |
-          sudo apt install -y gcc-arm-none-eabi make
           cd firmware && make
-      - name: Run Firmware
+
+      - name: Run Firmware in QEMU
         run: qemu-system-arm -M stm32f103c8 -kernel firmware/firmware.elf -serial stdio
-
-
