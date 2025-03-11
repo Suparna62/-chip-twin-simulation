@@ -8,6 +8,10 @@ jobs:
         uses: actions/checkout@v3
       - name: Install QEMU
         run: sudo apt update && sudo apt install -y qemu-system-arm
+      - name: Build Firmware
+        run: |
+          sudo apt install -y gcc-arm-none-eabi make
+          cd firmware && make
       - name: Run Firmware
         run: qemu-system-arm -M stm32f103c8 -kernel firmware/firmware.elf -serial stdio
 
