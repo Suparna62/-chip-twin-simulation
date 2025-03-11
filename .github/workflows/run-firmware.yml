@@ -9,6 +9,6 @@ jobs:
       - name: Install QEMU
         run: sudo apt update && sudo apt install -y qemu-system-arm
       - name: Run Firmware
-        run: qemu-system-arm -M stm32-p103 -kernel firmware/firmware.elf -serial stdio
+        run: qemu-system-arm -M stm32f103c8 -kernel firmware/firmware.elf -serial stdio
 
 
